@@ -94,7 +94,6 @@ jobs:
 
       - name: Run the training pipeline code
         run: |
-          
           python3 train.py
 
   post-train:
