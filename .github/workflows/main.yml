@@ -53,9 +53,7 @@ jobs:
           vol_id=$(aws ec2 describe-instances --instance-ids ${{ steps.start-ec2-runner.outputs.ec2-instance-id }} | jq -r ".Reservations[0].Instances[0].BlockDeviceMappings[0].Ebs.VolumeId") 
 
           aws ec2 modify-volume --size 50 --volume-id $vol_id
-
-          aws ec2 wait volume-available --volume-ids $vol_id
-
+          
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}   
