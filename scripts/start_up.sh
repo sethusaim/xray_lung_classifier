@@ -8,7 +8,7 @@ sudo apt-get update
 
 sudo apt upgrade -y
 
-echo "Updatedsystem packages"
+echo "Updated system packages"
 
 echo "Installing AWS cli"
 

@@ -34,7 +34,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: us-east-1
 
       - name: Start EC2 runner
         id: start-ec2-runner
@@ -42,8 +42,8 @@ jobs:
         with:
           mode: start
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          ec2-image-id: ${{ secrets.EC2_AMI_ID }}
-          ec2-instance-type: ${{ secrets.EC2_INSTANCE_TYPE }}
+          ec2-image-id: ami-0778521d914d23bc1
+          ec2-instance-type: t2.large
           subnet-id: ${{ secrets.EC2_SUBNET_ID }}
           security-group-id: ${{ secrets.EC2_SG_ID }}
 
@@ -68,7 +68,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: us-east-1
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -76,11 +76,7 @@ jobs:
 
       - name: Install the requirements 
         run: |
-          pip3 install -r requirements.txt 
-
-      - name: Move bentoml binaries to PATH
-        run: |
-          sudo mv /home/ubuntu/.local/bin/* /usr/bin
+          pip3 install -r requirements.txt
 
       - name: Run the training pipeline code
         run: |
@@ -97,7 +93,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_REGION: us-east-1
         run: |
           aws ec2 terminate-instances --instance-ids ${{ needs.start-runner.outputs.ec2-instance-id }}
           
@@ -105,6 +101,6 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_REGION: us-east-1
         run: |
           aws ec2 wait instance-terminated --instance-ids ${{ needs.start-runner.outputs.ec2-instance-id }}
