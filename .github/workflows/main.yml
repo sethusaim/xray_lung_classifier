@@ -85,7 +85,7 @@ jobs:
   post-train:
     name: Post Training Clean Up
     needs: 
-      - run-train
+      - run-training
       - start-runner
     runs-on: ubuntu-latest
     steps:
