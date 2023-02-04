@@ -89,10 +89,12 @@ jobs:
 
       - name: Install the requirements 
         run: |
+          pip3 install --upgrade pip
           pip3 install -r requirements.txt
 
       - name: Run the training pipeline code
         run: |
+          
           python3 train.py
 
   post-train:
