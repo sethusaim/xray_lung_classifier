@@ -47,6 +47,13 @@ jobs:
           subnet-id: ${{ secrets.EC2_SUBNET_ID }}
           security-group-id: ${{ secrets.EC2_SG_ID }}
 
+      - name: Increase the EBS Volume size
+        id: increase-ebs-volume
+        run: |
+          vol_id=$(aws ec2 describe-instances --instance-ids ${{ steps.start-ec2-runner.outputs.ec2-instance-id }} | jq -r ".Reservations[0].Instances[0].BlockDeviceMappings[0].Ebs.VolumeId") 
+
+          aws ec2 modify-volume --size 50 --volume-id $vol_id
+
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}   
