@@ -27,3 +27,9 @@ sudo usermod -aG docker ubuntu
 newgrp docker
 
 echo "Installed Docker"
+
+echo "Installing pip3"
+
+sudo apt install python3-pip -y
+
+echo "Installed pip3"
