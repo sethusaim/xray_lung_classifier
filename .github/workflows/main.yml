@@ -54,10 +54,6 @@ jobs:
 
           aws ec2 modify-volume --size 50 --volume-id $vol_id
 
-          sudo growpart /dev/xvda 1
-
-          sudo resize2fs /dev/xvda1
-
     outputs:
       label: ${{ steps.start-ec2-runner.outputs.label }}
       ec2-instance-id: ${{ steps.start-ec2-runner.outputs.ec2-instance-id }}   
@@ -69,6 +65,12 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: Extend the EC2 Storage
+        run: |
+          sudo growpart /dev/xvda 1
+
+          sudo resize2fs /dev/xvda1
 
       - name: Run the start up script
         run: |
